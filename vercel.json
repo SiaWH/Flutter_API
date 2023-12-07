@@ -11,7 +11,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://flutter-api-vercel-h0og9pta3-siawhs-projects-cfcf0f69.vercel.app/",
+        "APP_URL": "https://flutter-api-vercel-2-siawhs-projects-cfcf0f69.vercel.app/",
         "APP_KEY": "base64:da5SbaM1RQYEXLE8E6v/YT1Imcsj2RCV5fbajanb2jA=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
