@@ -9,30 +9,29 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email', 191)->unique();
-            $table->string('image')->nullable();
+        Schema::table('users', function (Blueprint $table) {
             $table->integer('age')->nullable();
             $table->double('height')->nullable();
             $table->double('weight')->nullable();
             $table->double('basal_metabolism')->nullable();
             $table->double('BMI')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('age');
+            $table->dropColumn('height');
+            $table->dropColumn('weight');
+            $table->dropColumn('basal_metabolism');
+            $table->dropColumn('BMI');
+        });
     }
 };

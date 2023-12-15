@@ -105,44 +105,71 @@ class AuthController extends Controller
     // }
 
     public function update(Request $request)
-{
-    $attrs = $request->validate([
-        'name' => 'required|string',
-        'image' => 'nullable|image|mimes:jpg,png,bmp',
-    ]);
+    {
+        $attrs = $request->validate([
+            'name' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,png,bmp',
+        ]);
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    // Update name
-    $user->update([
-        'name' => $attrs['name'],
-    ]);
+        // Update name
+        $user->update([
+            'name' => $attrs['name'],
+        ]);
 
-    // Update image if provided
-    if ($request->hasFile('image')) {
-        // Delete old image if it exists
-        if ($user->image) {
-            $oldPath = public_path('images') . $user->image;
-            if (File::exists($oldPath)) {
-                File::delete($oldPath);
+        // Update image if provided
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($user->image) {
+                $oldPath = public_path('images') . $user->image;
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
             }
+
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+
+            // Update user with new image
+            $user->update([
+                'image' => $imageName,
+            ]);
         }
 
-        $image = $request->file('image');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('images'), $imageName);
-
-        // Update user with new image
-        $user->update([
-            'image' => $imageName,
-        ]);
+        return response([
+            'message' => 'User updated.',
+            'user' => $user
+        ], 200);
     }
 
-    return response([
-        'message' => 'User updated.',
-        'user' => $user
-    ], 200);
-}
+    public function details(Request $request)
+    {
+        $attrs = $request->validate([
+            'age' => 'required|integer',
+            'height' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'basal_metabolism' => 'required|numeric',
+            'BMI' => 'required|numeric',
+        ]);
+
+        $user = auth()->user();
+
+        // Update details
+        $user->update([
+            'age' => $attrs['age'],
+            'height' => $attrs['height'],
+            'weight' => $attrs['weight'],
+            'basal_metabolism' => $attrs['basal_metabolism'],
+            'BMI' => $attrs['BMI'],
+        ]);
+
+        return response([
+            'message' => "User's details updated.",
+            'user' => $user
+        ], 200);
+    }
 
 
     public function updatePassword(Request $request)
