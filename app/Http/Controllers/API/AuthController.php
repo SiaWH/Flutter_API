@@ -152,6 +152,7 @@ class AuthController extends Controller
             'weight' => 'required|numeric',
             'basal_metabolism' => 'required|numeric',
             'BMI' => 'required|numeric',
+            'gender' => 'required|string',
         ]);
 
         $user = auth()->user();
@@ -163,6 +164,7 @@ class AuthController extends Controller
             'weight' => $attrs['weight'],
             'basal_metabolism' => $attrs['basal_metabolism'],
             'BMI' => $attrs['BMI'],
+            'gender' => $attrs['gender'],
         ]);
 
         return response([

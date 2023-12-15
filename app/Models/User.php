@@ -28,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'weight',
         'basal_metabolism',
         'BMI',
+        'gender',
     ];
 
     /**
