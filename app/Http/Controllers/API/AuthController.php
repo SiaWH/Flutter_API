@@ -109,6 +109,12 @@ class AuthController extends Controller
         $attrs = $request->validate([
             'name' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,png,bmp',
+            'age' => 'required|integer',
+            'height' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'basal_metabolism' => 'required|numeric',
+            'BMI' => 'required|numeric',
+            'gender' => 'required|string',
         ]);
 
         $user = auth()->user();
@@ -116,6 +122,12 @@ class AuthController extends Controller
         // Update name
         $user->update([
             'name' => $attrs['name'],
+            'age' => $attrs['age'],
+            'height' => $attrs['height'],
+            'weight' => $attrs['weight'],
+            'basal_metabolism' => $attrs['basal_metabolism'],
+            'BMI' => $attrs['BMI'],
+            'gender' => $attrs['gender'],
         ]);
 
         // Update image if provided

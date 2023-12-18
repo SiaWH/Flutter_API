@@ -25,10 +25,10 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "DB_CONNECTION": "mysql",
-        "DB_HOST": "127.0.0.1",
+        "DB_HOST": "gdatcentre.com",
         "DB_PORT": "3306",
-        "DB_DATABASE": "thesia_app",
-        "DB_USERNAME": "root",
-        "DB_PASSWORD": ""
+        "DB_DATABASE": "gdatcent_Intern2023",
+        "DB_USERNAME": "gdatcent_user1",
+        "DB_PASSWORD": "9D6wxvQH43BU"
     }
 }

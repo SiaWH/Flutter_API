@@ -13,11 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('gender')->nullable();
-            $table->double('height')->nullable();
-            $table->double('weight')->nullable();
-            $table->double('basal_metabolism')->nullable();
-            $table->double('BMI')->nullable();
-            $table->string('gender')->nullable();
         });
     }
 
@@ -28,11 +23,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('age');
-            $table->dropColumn('height');
-            $table->dropColumn('weight');
-            $table->dropColumn('basal_metabolism');
-            $table->dropColumn('BMI');
             $table->dropColumn('gender');
         });
     }
