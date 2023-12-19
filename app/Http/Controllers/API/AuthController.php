@@ -265,18 +265,18 @@ class AuthController extends Controller
 
     public function updateKcal(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $attrs = $request->validate([
             'kcal' => 'required|integer',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
         $user = auth()->user();
-        $user->update(['kcal' => $request->input('kcal')]);
 
-        return response()->json([
+        // Update details
+        $user->update([
+            'kcal' => $attrs['kcal'],
+        ]);
+
+        return response([
             'message' => "User's details updated.",
             'user' => $user['kcal']
         ], 200);
