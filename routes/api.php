@@ -32,6 +32,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::post('image', 'storeImage');
+    Route::post('kcal', 'updateKcal');
 });
 
 Route::get('/getImage/{filename}', [AuthController::class, 'showImage']);

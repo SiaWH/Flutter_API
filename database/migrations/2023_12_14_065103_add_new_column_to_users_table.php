@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('gender')->nullable();
+            $table->integer('kcal')->default(0);
         });
     }
 

@@ -263,4 +263,23 @@ class AuthController extends Controller
         return response($file, 200)->header('Content-Type', 'image/jpeg');
     }
 
+    public function updateKcal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'kcal' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        $user = auth()->user();
+        $user->update(['kcal' => $request->input('kcal')]);
+
+        return response()->json([
+            'message' => "User's details updated.",
+            'user' => $user['kcal']
+        ], 200);
+    }
+
 }
