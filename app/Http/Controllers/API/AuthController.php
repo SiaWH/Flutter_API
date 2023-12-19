@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\NutrientIntake;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -54,6 +55,16 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        NutrientIntake::create([
+            'user_id' => $user->id,
+            'kcal' => 0,
+            'proteins' => 0,
+            'carbs' => 0,
+            'fibre' => 0,
+            'fats' => 0,
+            'water' => 0,
         ]);
 
         return response()->json([
@@ -263,23 +274,23 @@ class AuthController extends Controller
         return response($file, 200)->header('Content-Type', 'image/jpeg');
     }
 
-    public function updateKcal(Request $request)
-    {
-        $attrs = $request->validate([
-            'kcal' => 'required|integer',
-        ]);
+    // public function updateKcal(Request $request)
+    // {
+    //     $attrs = $request->validate([
+    //         'kcal' => 'required|integer',
+    //     ]);
 
-        $user = auth()->user();
+    //     $user = auth()->user();
 
-        // Update details
-        $user->update([
-            'kcal' => $attrs['kcal'],
-        ]);
+    //     // Update details
+    //     $user->update([
+    //         'kcal' => $attrs['kcal'],
+    //     ]);
 
-        return response([
-            'message' => "User's details updated.",
-            'user' => $user['kcal']
-        ], 200);
-    }
+    //     return response([
+    //         'message' => "User's details updated.",
+    //         'user' => $user['kcal']
+    //     ], 200);
+    // }
 
 }

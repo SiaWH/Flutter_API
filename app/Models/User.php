@@ -71,4 +71,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function nutrientIntakes()
+    {
+        return $this->hasMany(NutrientIntake::class);
+    }
+    
 }

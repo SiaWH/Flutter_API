@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NutrientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
@@ -32,10 +33,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::post('image', 'storeImage');
-    Route::post('kcal', 'updateKcal');
 });
 
 Route::get('/getImage/{filename}', [AuthController::class, 'showImage']);
+
+//Nutrient
+Route::post('/kcal/{userId}', [NutrientController::class, 'update']);
 
 // Post
 Route::get('/posts', [PostController::class, 'index']); // all posts
