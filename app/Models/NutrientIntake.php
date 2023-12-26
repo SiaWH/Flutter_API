@@ -11,11 +11,14 @@ class NutrientIntake extends Model
 
     protected $fillable = [
         'user_id', 
+        'food_name',
         'kcal',
         'protein',
         'carbs',
         'fibre',
         'fats',
         'water',
+        'grams',
+        'intake_time',
     ];
 }

@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
+use App\Models\NutrientIntake;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class ResetDailyKcal extends Command
 {
@@ -12,16 +13,10 @@ class ResetDailyKcal extends Command
 
     public function handle()
     {
-        $users = User::all();
+        $yesterday = Carbon::now()->subDay();
 
-        foreach ($users as $user) {
-            // Check if the last intake date is before the current day
-            if ($user->last_intake_date < now()->startOfDay()) {
-                // Reset daily kcal to 0
-                $user->update(['kcal' => 0]);
-            }
-        }
+        NutrientIntake::where('intake_time', '<=', $yesterday)->delete();
 
-        $this->info('Daily user kcal reset completed.');
+        $this->info('Expired nutrient intakes deleted successfully.');
     }
 }

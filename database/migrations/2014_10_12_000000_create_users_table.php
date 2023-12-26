@@ -20,8 +20,11 @@ return new class extends Migration
             $table->String('gender')->nullable();
             $table->double('height')->nullable();
             $table->double('weight')->nullable();
-            $table->double('basal_metabolism')->nullable();
+            $table->double('basal_metabolism')->default(0);
             $table->double('BMI')->nullable();
+            $table->integer('lvl')->default(1);
+            $table->integer('lvl-stream')->default(0);
+            $table->double('experience')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

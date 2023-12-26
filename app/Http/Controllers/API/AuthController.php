@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\NutrientIntake;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -57,16 +56,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        NutrientIntake::create([
-            'user_id' => $user->id,
-            'kcal' => 0,
-            'proteins' => 0,
-            'carbs' => 0,
-            'fibre' => 0,
-            'fats' => 0,
-            'water' => 0,
-        ]);
-
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user
@@ -99,21 +88,14 @@ class AuthController extends Controller
         ], 200);
     }
 
-    // public function update(Request $request)
-    // {
-    //     $attrs = $request->validate([
-    //         'name' => 'required|string'
-    //     ]);
+    public function allUsers()
+    {
+        $users = User::all();
 
-    //     auth()->user()->update([
-    //         'name' => $attrs['name'],
-    //     ]);
-
-    //     return response([
-    //         'message' => 'User updated.',
-    //         'user' => auth()->user()
-    //     ], 200);
-    // }
+        return response([
+            'users' => $users
+        ], 200);
+    }
 
     public function update(Request $request)
     {
@@ -176,6 +158,7 @@ class AuthController extends Controller
             'basal_metabolism' => 'required|numeric',
             'BMI' => 'required|numeric',
             'gender' => 'required|string',
+            'experience' => 'required|integer',
         ]);
 
         $user = auth()->user();
@@ -188,6 +171,7 @@ class AuthController extends Controller
             'basal_metabolism' => $attrs['basal_metabolism'],
             'BMI' => $attrs['BMI'],
             'gender' => $attrs['gender'],
+            'experience' => $attrs['experience'],
         ]);
 
         return response([
@@ -274,23 +258,44 @@ class AuthController extends Controller
         return response($file, 200)->header('Content-Type', 'image/jpeg');
     }
 
-    // public function updateKcal(Request $request)
-    // {
-    //     $attrs = $request->validate([
-    //         'kcal' => 'required|integer',
-    //     ]);
+    public function levelUp(Request $request) 
+    {
+        $attrs = $request->validate( [
+            'lvl' => 'required|integer',
+            'lvl-stream' => 'required|integer',
+        ]);
 
-    //     $user = auth()->user();
+        $user = auth()->user();
 
-    //     // Update details
-    //     $user->update([
-    //         'kcal' => $attrs['kcal'],
-    //     ]);
+        $user->update([
+            'lvl' => $attrs['lvl'],
+            'lvl-stream' => $attrs['lvl-stream'],
+        ]);
 
-    //     return response([
-    //         'message' => "User's details updated.",
-    //         'user' => $user['kcal']
-    //     ], 200);
-    // }
+        return response([
+            'message' => "Level updated successfully",
+            'user' => $user,
+        ], 200);
+
+    }
+
+    public function experienceGain(Request $request) 
+    {
+        $attrs = $request->validate( [
+            'experience' => 'required|numeric',
+        ]);
+
+        $user = auth()->user();
+
+        $user->update([
+            'experience' => $attrs['experience'],
+        ]);
+
+        return response([
+            'message' => "Level updated successfully",
+            'user' => $user['experience'],
+        ], 200);
+
+    }
 
 }

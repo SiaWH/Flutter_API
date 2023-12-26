@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NutrientController;
+use App\Http\Controllers\WorkoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
@@ -28,6 +29,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('details', 'details');
     Route::get('user', 'user');
+    Route::get('all', 'allUsers');
     Route::put('update', 'update');
     Route::put('password', 'updatePassword');
     Route::post('logout', 'logout');
@@ -38,7 +40,14 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('/getImage/{filename}', [AuthController::class, 'showImage']);
 
 //Nutrient
-Route::post('/kcal/{userId}', [NutrientController::class, 'update']);
+Route::get('/kcal/{userId}', [NutrientController::class, 'getNutrientById']);
+Route::post('/kcal/{userId}', [NutrientController::class, 'create']);
+Route::post('/kcal/{userId}/{id}', [NutrientController::class, 'update']);
+Route::delete('/kcal/{userId}/{id}', [NutrientController::class, 'delete']);
+
+//Workour
+Route::get('/workout', [WorkoutController::class, 'index']);
+Route::post('/workout', [WorkoutController::class, 'store']);
 
 // Post
 Route::get('/posts', [PostController::class, 'index']); // all posts

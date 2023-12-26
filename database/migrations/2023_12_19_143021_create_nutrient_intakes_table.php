@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('food_name');
             $table->integer('kcal')->default(0);
             $table->integer('protein')->default(0);
             $table->integer('carbs')->default(0);
             $table->integer('fibre')->default(0);
             $table->integer('fats')->default(0);
             $table->integer('water')->default(0);
+            $table->double('grams')->default(0);
+            $table->dateTime('intake_time');
             $table->timestamps();
         });
     }
