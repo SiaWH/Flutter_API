@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class NutrientController extends Controller
 {
-    public function create(Request $request, $userId)
+    public function create(Request $request)
     {
         $request->validate([
-            'food_name' => 'required|string',
+            'food_id' => 'required|exists:foods,id',
             'kcal' => 'required|integer',
             'protein' => 'required|integer',
             'carbs' => 'required|integer',
@@ -21,9 +21,11 @@ class NutrientController extends Controller
             'intake_time' => 'required|date',
         ]);
 
+        $user = auth()->user();
+
         $nutrientIntake = NutrientIntake::create([
-            'user_id' => $userId,
-            'food_name' => $request->input('food_name'),
+            'user_id' => $user->id,
+            'food_id' => $request->input('food_id'),
             'kcal' => $request->input('kcal'),
             'protein' => $request->input('protein'),
             'carbs' => $request->input('carbs'),
@@ -40,7 +42,7 @@ class NutrientController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $userId, $id)
+    public function update(Request $request, $id)
     {
         $attrs = $request->validate([
             'kcal' => 'required|integer',
@@ -52,8 +54,10 @@ class NutrientController extends Controller
             'grams' => 'required|numeric',
         ]);
 
+        $user = auth()->user();
+
         // Find the nutrient intake record based on user_id and id
-        $nutrientIntake = NutrientIntake::where('user_id', $userId)->where('id', $id)->first();
+        $nutrientIntake = NutrientIntake::where('user_id', $user->id)->where('id', $id)->first();
 
         if (!$nutrientIntake) {
             return response(['message' => 'Nutrient intake not found for the specified user.'], 404);
@@ -75,11 +79,12 @@ class NutrientController extends Controller
         ], 200);
     }
 
-    public function getNutrientById($userId)
+    public function getNutrientById()
     {
+        $user = auth()->user();
         // Find the nutrient intake records based on user_id and select specific columns
-        $nutrientIntakes = NutrientIntake::where('user_id', $userId)
-            ->select('id', 'food_name','kcal', 'protein', 'carbs', 'fibre', 'fats', 'water', 'grams', 'intake_time')
+        $nutrientIntakes = NutrientIntake::where('user_id', $user->id)
+            ->select('id', 'food_id','kcal', 'protein', 'carbs', 'fibre', 'fats', 'water', 'grams', 'intake_time')
             ->get();
 
         return response([
@@ -88,10 +93,11 @@ class NutrientController extends Controller
         ], 200);
     }
 
-    public function delete($userId, $id)
+    public function delete($id)
     {
+        $user = auth()->user();
         // Find the nutrient intake record based on user_id and id
-        $nutrientIntake = NutrientIntake::where('user_id', $userId)->where('id', $id)->first();
+        $nutrientIntake = NutrientIntake::where('user_id', $user->id)->where('id', $id)->first();
 
         if (!$nutrientIntake) {
             return response(['message' => 'Nutrient intake not found for the specified user and id.'], 404);

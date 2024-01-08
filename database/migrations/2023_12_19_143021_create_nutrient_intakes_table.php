@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('food_name');
+            $table->unsignedBigInteger('food_id');
+            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
             $table->integer('kcal')->default(0);
             $table->integer('protein')->default(0);
             $table->integer('carbs')->default(0);

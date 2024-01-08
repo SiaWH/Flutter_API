@@ -11,7 +11,7 @@ class NutrientIntake extends Model
 
     protected $fillable = [
         'user_id', 
-        'food_name',
+        'food_id',
         'kcal',
         'protein',
         'carbs',

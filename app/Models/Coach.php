@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Workout extends Model
+class Coach extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'gif',
-        'difficulty',
-        'type',
+        'image',
+        'age',
+        'gender',
+        'experience_years',
+        'rate',
+        'description',
     ];
 }

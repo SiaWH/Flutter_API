@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workouts', function (Blueprint $table) {
+        Schema::create('foods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('gif');
-            $table->unsignedInteger('difficulty');
-            $table->string('type');
+            $table->string('category');
+            $table->decimal('protein', 10, 2);
+            $table->decimal('carbs', 10, 2);
+            $table->decimal('fats', 10, 2);
+            $table->decimal('fibre', 10, 2);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workout');
+        Schema::dropIfExists('foods');
     }
 };

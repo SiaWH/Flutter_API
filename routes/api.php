@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\CoachController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\NutrientController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Http\Request;
@@ -35,32 +39,60 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::post('image', 'storeImage');
+    Route::post('lvl', 'levelUp');
 });
 
 Route::get('/getImage/{filename}', [AuthController::class, 'showImage']);
 
-//Nutrient
-Route::get('/kcal/{userId}', [NutrientController::class, 'getNutrientById']);
-Route::post('/kcal/{userId}', [NutrientController::class, 'create']);
-Route::post('/kcal/{userId}/{id}', [NutrientController::class, 'update']);
-Route::delete('/kcal/{userId}/{id}', [NutrientController::class, 'delete']);
+//Foods
+Route::get('/foods', [FoodController::class, 'index']);
+Route::post('/foods', [FoodController::class, 'create']);
+Route::post('/foods/{id}', [FoodController::class, 'update']);
+Route::delete('/foods/{id}', [FoodController::class, 'delete']);
 
-//Workour
+//Nutrient
+Route::get('/kcal', [NutrientController::class, 'getNutrientById']);
+Route::post('/kcal', [NutrientController::class, 'create']);
+Route::post('/kcal/{id}', [NutrientController::class, 'update']);
+Route::delete('/kcal/{id}', [NutrientController::class, 'delete']);
+
+//Workout
 Route::get('/workout', [WorkoutController::class, 'index']);
 Route::post('/workout', [WorkoutController::class, 'store']);
+Route::post('/workout/{id}', [WorkoutController::class, 'update']);
+Route::delete('/workout/{id}', [WorkoutController::class, 'delete']);
 
 // Post
 Route::get('/posts', [PostController::class, 'index']); // all posts
 Route::post('/posts', [PostController::class, 'store']); // create post
 Route::get('/posts/{id}', [PostController::class, 'show']); // get single post
-Route::put('/posts/{id}', [PostController::class, 'update']); // update post
+Route::post('/posts/{id}', [PostController::class, 'update']); // update post
 Route::delete('/posts/{id}', [PostController::class, 'destroy']); // delete post
 
 // Comment
 Route::get('/posts/{id}/comments', [CommentController::class, 'index']); // all comments of a post
 Route::post('/posts/{id}/comments', [CommentController::class, 'store']); // create comment on a post
-Route::put('/comments/{id}', [CommentController::class, 'update']); // update a comment
+Route::post('/comments/{id}', [CommentController::class, 'update']); // update a comment
 Route::delete('/comments/{id}', [CommentController::class, 'destroy']); // delete a comment
 
 // Like
 Route::post('/posts/{id}/likes', [LikeController::class, 'likeOrUnlike']); // like or dislike back a post
+
+//Feedback
+Route::get('/feedback', [FeedbackController::class, 'index']);
+Route::post('/feedback', [FeedbackController::class, 'store']);
+Route::delete('/feedback/{id}', [FeedbackController::class, 'delete']);
+
+//Coaches
+Route::get('/coaches', [CoachController::class, 'index']);
+Route::post('/coaches', [CoachController::class, 'create']);
+Route::post('/coaches/rate/{id}', [CoachController::class, 'updateRate']);
+Route::post('/coaches/{id}', [CoachController::class, 'update']);
+Route::delete('/coaches/{id}', [CoachController::class, 'delete']);
+
+//Appointments
+Route::get('/appointment', [AppointmentController::class, 'indexByUser']);
+Route::get('/appointment/{id}', [AppointmentController::class, 'getRatings']);
+Route::post('/appointment', [AppointmentController::class, 'store']);
+Route::post('/appointment/{id}', [AppointmentController::class, 'update']);
+Route::post('/appointment/rate/{id}', [AppointmentController::class, 'updateRate']);

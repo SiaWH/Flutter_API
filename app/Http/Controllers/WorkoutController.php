@@ -9,7 +9,7 @@ class WorkoutController extends Controller
 {
     public function index()
     {
-        $workouts = Workout::all();
+        $workouts = Workout::select('id', 'name', 'gif', 'difficulty', 'type')->get();
         return response(['workouts' => $workouts], 200);
     }
 
@@ -17,16 +17,50 @@ class WorkoutController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'image' => 'required|string',
-            'video' => 'required|string',
+            'gif' => 'required|string',
             'difficulty' => 'required|integer',
             'type' => 'required|string',
         ]);
 
-        $workouts = Workout::create($request->all());
+        $workout = Workout::create($request->all());
 
         return response([
-            'Nutrients' => $workouts,
+            'workout' => $workout,
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'gif' => 'required|string',
+            'difficulty' => 'required|integer',
+            'type' => 'required|string',
+        ]);
+
+        $workout = Workout::find($id);
+
+        $workout->update($request->all());
+
+        return response([
+            'workout' => $workout,
+        ], 200);
+    }
+
+    public function delete($id)
+    {
+        $workout = Workout::find($id);
+
+        if (!$workout) {
+            return response([
+                'message' => 'Food not found.',
+            ], 404);
+        }
+
+        $workout->delete();
+
+        return response([
+            'message' => 'Food deleted successfully.',
         ], 200);
     }
 }

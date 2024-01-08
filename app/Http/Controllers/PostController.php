@@ -25,7 +25,7 @@ class PostController extends Controller
     public function show($id)
     {
         return response([
-            'post' => Post::where('id', $id)->withCount('comments', 'likes')->get()
+            'posts' => Post::where('id', $id)->withCount('comments', 'likes')->get()
         ], 200);
     }
 
@@ -49,7 +49,7 @@ class PostController extends Controller
 
         return response([
             'message' => 'Post created.',
-            'post' => $post,
+            'posts' => $post,
         ], 200);
     }
 
@@ -85,7 +85,7 @@ class PostController extends Controller
 
         return response([
             'message' => 'Post updated.',
-            'post' => $post
+            'posts' => $post
         ], 200);
     }
 

@@ -261,14 +261,14 @@ class AuthController extends Controller
     public function levelUp(Request $request) 
     {
         $attrs = $request->validate( [
-            'lvl' => 'required|integer',
+            'lvl' => 'sometimes|integer',
             'lvl-stream' => 'required|integer',
         ]);
 
         $user = auth()->user();
 
         $user->update([
-            'lvl' => $attrs['lvl'],
+            'lvl' => $attrs['lvl'] ?? $user->lvl,
             'lvl-stream' => $attrs['lvl-stream'],
         ]);
 
