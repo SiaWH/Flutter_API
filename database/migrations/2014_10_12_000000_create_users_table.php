@@ -27,6 +27,8 @@ return new class extends Migration
             $table->double('experience')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_admin')->default(false);
+            $table->integer('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

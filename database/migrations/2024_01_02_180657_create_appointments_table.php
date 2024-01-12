@@ -13,15 +13,12 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('coach_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('coach_id')->constrained()->references('id')->on('coaches')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('appointment_date_time');
             $table->string('status')->default('upcoming');
             $table->double('rate')->nullable();
             $table->timestamps();
-
-            $table->foreign('coach_id')->references('id')->on('coaches')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('gender');
             $table->integer('experience_years');
-            $table->double('rate');
+            $table->double('rate')->default(5.0);
             $table->string('description', 900);
             $table->timestamps();
         });

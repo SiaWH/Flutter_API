@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('nutrient_intakes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('food_id');
-            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('food_id')->constrained()->references('id')->on('foods')->onDelete('cascade');
             $table->integer('kcal')->default(0);
             $table->integer('protein')->default(0);
             $table->integer('carbs')->default(0);
